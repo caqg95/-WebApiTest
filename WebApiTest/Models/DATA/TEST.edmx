@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NORTHWINDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CATEGORIES">
+          <Key>
+            <PropertyRef Name="CATEGORYID" />
+          </Key>
+          <Property Name="CATEGORYID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CATEGORYNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PICTURE" Type="binary" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="PRODUCTID" />
+          </Key>
+          <Property Name="PRODUCTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRODUCTNAME" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SUPPLIERID" Type="int" Nullable="false" />
+          <Property Name="CATEGORYID" Type="int" Nullable="false" />
+          <Property Name="QUANTITYPERUNITY" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UNITPRICE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UNITSINSTOCKS" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UNITSONORDER" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="REORDERLEVEL" Type="int" Nullable="false" />
+          <Property Name="DISCONTINUED" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SUPPLIERS">
+          <Key>
+            <PropertyRef Name="SUPPLIERID" />
+          </Key>
+          <Property Name="SUPPLIERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COMPANYNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CONTACTNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CONTACTTITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CITY" Type="nvarchar" MaxLength="50" />
+          <Property Name="REGION" Type="nvarchar" MaxLength="50" />
+          <Property Name="POSTALCODE" Type="nvarchar" MaxLength="50" />
+          <Property Name="COUNTRY" Type="nvarchar" MaxLength="50" />
+          <Property Name="PHONE" Type="nvarchar" MaxLength="50" />
+          <Property Name="FAX" Type="nvarchar" MaxLength="50" />
+          <Property Name="HOMEPAGE" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__PRODUCTS__CATEGO__276EDEB3">
+          <End Role="CATEGORIES" Type="Self.CATEGORIES" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIES">
+              <PropertyRef Name="CATEGORYID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="CATEGORYID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTS__SUPPLI__286302EC">
+          <End Role="SUPPLIERS" Type="Self.SUPPLIERS" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUPPLIERS">
+              <PropertyRef Name="SUPPLIERID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="SUPPLIERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SpListadoProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TEST" />
+        <EntityContainer Name="NORTHWINDModelStoreContainer">
+          <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="TEST" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="TEST" store:Type="Tables" />
+          <EntitySet Name="SUPPLIERS" EntityType="Self.SUPPLIERS" Schema="TEST" store:Type="Tables" />
+          <AssociationSet Name="FK__PRODUCTS__CATEGO__276EDEB3" Association="Self.FK__PRODUCTS__CATEGO__276EDEB3">
+            <End Role="CATEGORIES" EntitySet="CATEGORIES" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTS__SUPPLI__286302EC" Association="Self.FK__PRODUCTS__SUPPLI__286302EC">
+            <End Role="SUPPLIERS" EntitySet="SUPPLIERS" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NORTHWINDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NORTHWINDEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SpListadoProducto" ReturnType="Collection(NORTHWINDModel.SpListadoProducto_Result)" />
+          <EntitySet Name="PRODUCTS" EntityType="NORTHWINDModel.PRODUCT" />
+          <EntitySet Name="CATEGORIES" EntityType="NORTHWINDModel.CATEGORy" />
+          <AssociationSet Name="FK__PRODUCTS__CATEGO__276EDEB3" Association="NORTHWINDModel.FK__PRODUCTS__CATEGO__276EDEB3">
+            <End Role="CATEGORy" EntitySet="CATEGORIES" />
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <EntitySet Name="SUPPLIERS" EntityType="NORTHWINDModel.SUPPLIER" />
+          <AssociationSet Name="FK__PRODUCTS__SUPPLI__286302EC" Association="NORTHWINDModel.FK__PRODUCTS__SUPPLI__286302EC">
+            <End Role="SUPPLIER" EntitySet="SUPPLIERS" />
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="SpListadoProducto_Result">
+          <Property Type="Int32" Name="PRODUCTID" Nullable="false" />
+          <Property Type="String" Name="PRODUCTNAME" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="SUPPLIERID" Nullable="false" />
+          <Property Type="Int32" Name="CATEGORYID" Nullable="false" />
+          <Property Type="Decimal" Name="QUANTITYPERUNITY" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="UNITPRICE" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="UNITSINSTOCKS" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="UNITSONORDER" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="REORDERLEVEL" Nullable="false" />
+          <Property Type="Boolean" Name="DISCONTINUED" Nullable="false" />
+          <Property Type="Int32" Name="CATEGORYID1" Nullable="false" />
+          <Property Type="String" Name="CATEGORYNAME" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DESCRIPTION" Nullable="false" MaxLength="250" />
+          <Property Type="Binary" Name="PICTURE" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="SUPPLIERID1" Nullable="false" />
+          <Property Type="String" Name="COMPANYNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CONTACTNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CONTACTTITLE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ADDRESS" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="CITY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="REGION" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="POSTALCODE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="COUNTRY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FAX" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HOMEPAGE" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="PRODUCTID" />
+          </Key>
+          <Property Name="PRODUCTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRODUCTNAME" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SUPPLIERID" Type="Int32" Nullable="false" />
+          <Property Name="CATEGORYID" Type="Int32" Nullable="false" />
+          <Property Name="QUANTITYPERUNITY" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="UNITPRICE" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="UNITSINSTOCKS" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="UNITSONORDER" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="REORDERLEVEL" Type="Int32" Nullable="false" />
+          <Property Name="DISCONTINUED" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CATEGORy" Relationship="NORTHWINDModel.FK__PRODUCTS__CATEGO__276EDEB3" FromRole="PRODUCT" ToRole="CATEGORy" />
+          <NavigationProperty Name="SUPPLIER" Relationship="NORTHWINDModel.FK__PRODUCTS__SUPPLI__286302EC" FromRole="PRODUCT" ToRole="SUPPLIER" />
+        </EntityType>
+        <EntityType Name="CATEGORy">
+          <Key>
+            <PropertyRef Name="CATEGORYID" />
+          </Key>
+          <Property Name="CATEGORYID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CATEGORYNAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PICTURE" Type="Binary" MaxLength="1" FixedLength="true" />
+          <NavigationProperty Name="PRODUCTS" Relationship="NORTHWINDModel.FK__PRODUCTS__CATEGO__276EDEB3" FromRole="CATEGORy" ToRole="PRODUCT" />
+        </EntityType>
+        <Association Name="FK__PRODUCTS__CATEGO__276EDEB3">
+          <End Type="NORTHWINDModel.CATEGORy" Role="CATEGORy" Multiplicity="1" />
+          <End Type="NORTHWINDModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORy">
+              <PropertyRef Name="CATEGORYID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="CATEGORYID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SUPPLIER">
+          <Key>
+            <PropertyRef Name="SUPPLIERID" />
+          </Key>
+          <Property Name="SUPPLIERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COMPANYNAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CONTACTNAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CONTACTTITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REGION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="POSTALCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="COUNTRY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PHONE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FAX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HOMEPAGE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCTS" Relationship="NORTHWINDModel.FK__PRODUCTS__SUPPLI__286302EC" FromRole="SUPPLIER" ToRole="PRODUCT" />
+        </EntityType>
+        <Association Name="FK__PRODUCTS__SUPPLI__286302EC">
+          <End Type="NORTHWINDModel.SUPPLIER" Role="SUPPLIER" Multiplicity="1" />
+          <End Type="NORTHWINDModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUPPLIER">
+              <PropertyRef Name="SUPPLIERID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="SUPPLIERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NORTHWINDModelStoreContainer" CdmEntityContainer="NORTHWINDEntities">
+          <FunctionImportMapping FunctionImportName="SpListadoProducto" FunctionName="NORTHWINDModel.Store.SpListadoProducto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NORTHWINDModel.SpListadoProducto_Result">
+                <ScalarProperty Name="PRODUCTID" ColumnName="PRODUCTID" />
+                <ScalarProperty Name="PRODUCTNAME" ColumnName="PRODUCTNAME" />
+                <ScalarProperty Name="SUPPLIERID" ColumnName="SUPPLIERID" />
+                <ScalarProperty Name="CATEGORYID" ColumnName="CATEGORYID" />
+                <ScalarProperty Name="QUANTITYPERUNITY" ColumnName="QUANTITYPERUNITY" />
+                <ScalarProperty Name="UNITPRICE" ColumnName="UNITPRICE" />
+                <ScalarProperty Name="UNITSINSTOCKS" ColumnName="UNITSINSTOCKS" />
+                <ScalarProperty Name="UNITSONORDER" ColumnName="UNITSONORDER" />
+                <ScalarProperty Name="REORDERLEVEL" ColumnName="REORDERLEVEL" />
+                <ScalarProperty Name="DISCONTINUED" ColumnName="DISCONTINUED" />
+                <ScalarProperty Name="CATEGORYID1" ColumnName="CATEGORYID1" />
+                <ScalarProperty Name="CATEGORYNAME" ColumnName="CATEGORYNAME" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="PICTURE" ColumnName="PICTURE" />
+                <ScalarProperty Name="SUPPLIERID1" ColumnName="SUPPLIERID1" />
+                <ScalarProperty Name="COMPANYNAME" ColumnName="COMPANYNAME" />
+                <ScalarProperty Name="CONTACTNAME" ColumnName="CONTACTNAME" />
+                <ScalarProperty Name="CONTACTTITLE" ColumnName="CONTACTTITLE" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="REGION" ColumnName="REGION" />
+                <ScalarProperty Name="POSTALCODE" ColumnName="POSTALCODE" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="FAX" ColumnName="FAX" />
+                <ScalarProperty Name="HOMEPAGE" ColumnName="HOMEPAGE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="PRODUCTS">
+            <EntityTypeMapping TypeName="NORTHWINDModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCTS">
+                <ScalarProperty Name="DISCONTINUED" ColumnName="DISCONTINUED" />
+                <ScalarProperty Name="REORDERLEVEL" ColumnName="REORDERLEVEL" />
+                <ScalarProperty Name="UNITSONORDER" ColumnName="UNITSONORDER" />
+                <ScalarProperty Name="UNITSINSTOCKS" ColumnName="UNITSINSTOCKS" />
+                <ScalarProperty Name="UNITPRICE" ColumnName="UNITPRICE" />
+                <ScalarProperty Name="QUANTITYPERUNITY" ColumnName="QUANTITYPERUNITY" />
+                <ScalarProperty Name="CATEGORYID" ColumnName="CATEGORYID" />
+                <ScalarProperty Name="SUPPLIERID" ColumnName="SUPPLIERID" />
+                <ScalarProperty Name="PRODUCTNAME" ColumnName="PRODUCTNAME" />
+                <ScalarProperty Name="PRODUCTID" ColumnName="PRODUCTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIES">
+            <EntityTypeMapping TypeName="NORTHWINDModel.CATEGORy">
+              <MappingFragment StoreEntitySet="CATEGORIES">
+                <ScalarProperty Name="PICTURE" ColumnName="PICTURE" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="CATEGORYNAME" ColumnName="CATEGORYNAME" />
+                <ScalarProperty Name="CATEGORYID" ColumnName="CATEGORYID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUPPLIERS">
+            <EntityTypeMapping TypeName="NORTHWINDModel.SUPPLIER">
+              <MappingFragment StoreEntitySet="SUPPLIERS">
+                <ScalarProperty Name="HOMEPAGE" ColumnName="HOMEPAGE" />
+                <ScalarProperty Name="FAX" ColumnName="FAX" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+                <ScalarProperty Name="POSTALCODE" ColumnName="POSTALCODE" />
+                <ScalarProperty Name="REGION" ColumnName="REGION" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="CONTACTTITLE" ColumnName="CONTACTTITLE" />
+                <ScalarProperty Name="CONTACTNAME" ColumnName="CONTACTNAME" />
+                <ScalarProperty Name="COMPANYNAME" ColumnName="COMPANYNAME" />
+                <ScalarProperty Name="SUPPLIERID" ColumnName="SUPPLIERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
